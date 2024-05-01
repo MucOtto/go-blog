@@ -2,9 +2,14 @@ package main
 
 import (
 	"fmt"
+	"go-blog/common"
 	"go-blog/router"
 	"net/http"
 )
+
+func init() {
+	common.LoadTemplate()
+}
 
 func main() {
 	server := http.Server{

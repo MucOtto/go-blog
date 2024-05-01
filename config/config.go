@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"github.com/BurntSushi/toml"
 	"os"
 )
@@ -46,6 +47,6 @@ func init() {
 	Cfg.System.Version = 1.0
 	_, err = toml.DecodeFile("config/config.toml", &Cfg)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 }

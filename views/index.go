@@ -1,10 +1,10 @@
 package views
 
 import (
+	"fmt"
+	"go-blog/common"
 	"go-blog/config"
 	"go-blog/models"
-	"html/template"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -27,22 +27,8 @@ func Date(layout string) string {
 
 func (*HtmlApi) Index(w http.ResponseWriter, r *http.Request) {
 
-	t := template.New("index.html")
+	_index := common.Template.Index
 
-	index := PREFIX + "/index.html"
-	header := PREFIX + "/layout/header.html"
-	footer := PREFIX + "/layout/footer.html"
-	personal := PREFIX + "/layout/personal.html"
-	post_list := PREFIX + "/layout/post-list.html"
-	pagination := PREFIX + "/layout/pagination.html"
-	home := PREFIX + "/home.html"
-
-	t.Funcs(template.FuncMap{"isODD": IsODD, "getNextName": GetNextName, "date": Date})
-	t, err := t.ParseFiles(index, header, footer, personal, post_list, pagination, home)
-	if err != nil {
-		log.Println(" T -------------")
-		log.Fatalln(err)
-	}
 	//页面上涉及到的所有的数据，必须有定义
 	var categorys = []models.Category{
 		{
@@ -74,5 +60,8 @@ func (*HtmlApi) Index(w http.ResponseWriter, r *http.Request) {
 		PageEnd:   true,
 	}
 
-	t.Execute(w, *homeRes)
+	err := _index.Execute(w, *homeRes)
+	if err != nil {
+		fmt.Println("Index Error:", err)
+	}
 }
