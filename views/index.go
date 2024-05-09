@@ -6,24 +6,7 @@ import (
 	"go-blog/config"
 	"go-blog/models"
 	"net/http"
-	"os"
-	"time"
 )
-
-var (
-	path, _ = os.Getwd()
-	PREFIX  = path + "/template"
-)
-
-func IsODD(num int) bool {
-	return num%2 == 0
-}
-func GetNextName(strs []string, index int) string {
-	return strs[index+1]
-}
-func Date(layout string) string {
-	return time.Now().Format(layout)
-}
 
 func (*HtmlApi) Index(w http.ResponseWriter, r *http.Request) {
 
