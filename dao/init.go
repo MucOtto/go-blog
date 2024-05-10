@@ -11,7 +11,7 @@ import (
 var DB *sql.DB
 
 func init() {
-	dataSourceName := fmt.Sprintf("root:root@tcp(localhost:3306)/goblog?charset=utf8&loc=%s&parseTime=true", url.QueryEscape("Asia/Shanghai"))
+	dataSourceName := fmt.Sprintf("root:Wangjiayi1@tcp(localhost:3306)/blog?charset=utf8&loc=%s&parseTime=true", url.QueryEscape("Asia/Shanghai"))
 	db, err := sql.Open("mysql", dataSourceName)
 	if err != nil {
 		panic("数据库连接失败")

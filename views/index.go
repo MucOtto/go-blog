@@ -1,50 +1,21 @@
 package views
 
 import (
-	"fmt"
+	"errors"
 	"go-blog/common"
-	"go-blog/config"
-	"go-blog/models"
+	"go-blog/service"
+	"log"
 	"net/http"
 )
 
 func (*HtmlApi) Index(w http.ResponseWriter, r *http.Request) {
-
 	_index := common.Template.Index
 
-	//页面上涉及到的所有的数据，必须有定义
-	var categorys = []models.Category{
-		{
-			Cid:  1,
-			Name: "go",
-		},
-	}
-	var posts = []models.PostMore{
-		{
-			Pid:          1,
-			Title:        "go博客",
-			Content:      "内容",
-			UserName:     "张三",
-			ViewCount:    123,
-			CreateAt:     "2022-02-20",
-			CategoryId:   1,
-			CategoryName: "go",
-			Type:         0,
-		},
-	}
-
-	homeRes := &models.HomeRes{
-		Viewer:    config.Cfg.Viewer,
-		Categorys: categorys,
-		Posts:     posts,
-		Total:     1,
-		Page:      1,
-		Pages:     []int{1},
-		PageEnd:   true,
-	}
-
-	err := _index.Execute(w, *homeRes)
+	res, err := service.GetHomeInfo()
 	if err != nil {
-		fmt.Println("Index Error:", err)
+		log.Println("error:", err.Error())
+		_index.WriteError(w, errors.New("系统错误"))
 	}
+
+	_index.WriteData(w, res)
 }

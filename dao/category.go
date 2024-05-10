@@ -5,7 +5,7 @@ import (
 	"log"
 )
 
-func queryAllCategory() ([]models.Category, error) {
+func QueryAllCategory() ([]models.Category, error) {
 	rows, err := DB.Query("select * from blog_category")
 	if err != nil {
 		log.Panicln("queryAllCategory 失败", err.Error())
