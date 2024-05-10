@@ -44,8 +44,8 @@ func GetHomeInfo(page, pageSize int) (*models.HomeRes, error) {
 		postMores = append(postMores, postMore)
 	}
 
-	postCount := dao.GetPostCount()
-	pageCount := (postCount-1)/10 + 1
+	total := dao.GetPostCount()
+	pageCount := (total-1)/10 + 1
 	var pages []int
 	for i := 0; i < pageCount; i++ {
 		pages = append(pages, i+1)
@@ -55,10 +55,10 @@ func GetHomeInfo(page, pageSize int) (*models.HomeRes, error) {
 		Viewer:    config.Cfg.Viewer,
 		Categorys: category,
 		Posts:     postMores,
-		Total:     pageCount,
-		Page:      1,
+		Total:     total,
+		Page:      page,
 		Pages:     pages,
-		PageEnd:   page == pageCount,
+		PageEnd:   page != pageCount,
 	}
 
 	return homeRes, nil

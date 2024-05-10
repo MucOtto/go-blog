@@ -39,7 +39,7 @@ func GetPostCount() (count int) {
 	if row.Err() != nil {
 		log.Println(row.Err().Error())
 	}
-	err := row.Scan(count)
+	err := row.Scan(&count)
 	if err != nil {
 		return 0
 	}
