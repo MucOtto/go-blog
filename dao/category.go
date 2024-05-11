@@ -36,3 +36,21 @@ func GetCategoryNameById(id int) string {
 	}
 	return name
 }
+
+func GetCategoryById(cid int) []models.Category {
+	var category models.Category
+	// 直接执行 Scan，在 Scan 中处理可能的错误
+	err := DB.QueryRow("SELECT * FROM blog_category WHERE cid = ?", cid).Scan(
+		&category.Cid,
+		&category.Name,
+		&category.CreateAt,
+		&category.UpdateAt,
+	)
+	if err != nil {
+		log.Println(err.Error())
+		return nil // 或返回一个空切片，根据你的错误处理策略
+	}
+
+	// 直接在返回语句中使用构造的切片
+	return []models.Category{category}
+}
