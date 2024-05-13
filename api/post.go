@@ -1,14 +1,31 @@
 package api
 
 import (
+	"errors"
 	"go-blog/common"
+	"go-blog/dao"
 	"go-blog/models"
 	"go-blog/service"
 	"go-blog/utils"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
+
+func (*API) GetPost(w http.ResponseWriter, r *http.Request) {
+	path := r.URL.Path
+	id := strings.TrimPrefix(path, "/api/v1/post/")
+	pid, err := strconv.Atoi(id)
+	if err != nil {
+		common.Error(w, errors.New("获取文章id失败"))
+	}
+
+	post, err := dao.GetPostDetailById(pid)
+
+	common.Success(w, post)
+
+}
 
 func (*API) SavePost(w http.ResponseWriter, r *http.Request) {
 
@@ -48,5 +65,6 @@ func (*API) SavePost(w http.ResponseWriter, r *http.Request) {
 		common.Success(w, post)
 
 	case http.MethodPut:
+		// 懒得做了
 	}
 }
