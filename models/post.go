@@ -56,3 +56,9 @@ type PostRes struct {
 	config.SystemConfig
 	Article PostMore
 }
+
+type WritingRes struct {
+	CdnURL    string
+	Title     string
+	Categorys []Category
+}
