@@ -48,3 +48,7 @@ func Writing() (wr models.WritingRes) {
 	wr.Categorys = category
 	return
 }
+
+func SavePost(post *models.Post) {
+	dao.SavePost(post)
+}

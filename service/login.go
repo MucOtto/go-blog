@@ -8,7 +8,7 @@ import (
 )
 
 func GetLoginInfo(username string, password string) (*models.LoginResponse, error) {
-	password = utils.Md5Crypt(password, "mszls")
+	password = utils.Md5Crypt(password, "mszlu")
 	user := dao.GetUser(username, password)
 	if user == nil {
 		return nil, errors.New("账号或密码不正确")
