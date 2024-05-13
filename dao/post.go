@@ -85,3 +85,26 @@ func GetPostCountByCategoryId(cid int) (count int) {
 	}
 	return count
 }
+
+func GetPostDetailById(pid int) (*models.Post, error) {
+	post := &models.Post{}
+	err := DB.QueryRow("select * from blog_post where pid = ?", pid).Scan(
+		&post.Pid,
+		&post.Title,
+		&post.Content,
+		&post.Markdown,
+		&post.CategoryId,
+		&post.UserId,
+		&post.ViewCount,
+		&post.Type,
+		&post.Slug,
+		&post.CreateAt,
+		&post.UpdateAt,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return post, nil
+}
